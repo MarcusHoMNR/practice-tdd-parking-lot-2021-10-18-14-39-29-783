@@ -24,7 +24,7 @@ public class SmartParkingBoyTest {
 
         //then
         assertAll(
-                () -> assertNotNull(parkingLot1.getParkedCarList()),
+                () -> assertFalse(parkingLot1.getParkedCarList().isEmpty()),
                 () -> assertEquals(1, parkingLot1.getParkedCarList().size()),
                 () -> assertEquals(targetCar, parkingLot1.getParkedCarList().get(0)),
                 () -> assertTrue(parkingLot2.getParkedCarList().isEmpty())
