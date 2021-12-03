@@ -104,15 +104,11 @@ public class ParkingLotTest {
 
         //when
         parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));
-        Car fetchedCarFirstTime = parkingLot.fetchCarByCustomer(customer);
-        Car fetchedCarAgain = parkingLot.fetchCarByCustomer(customer);
+        parkingLot.fetchCarByCustomer(customer); // fetchedCarFirstTime
 
         //then
-        assertAll(
-                () -> assertNotNull(fetchedCarFirstTime),
-                () -> assertEquals(targetCar.getCarId(), fetchedCarFirstTime.getCarId()),
-                () -> assertNull(fetchedCarAgain)
-        );
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
 
     @Test

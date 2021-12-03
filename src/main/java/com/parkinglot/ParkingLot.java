@@ -55,9 +55,8 @@ public class ParkingLot {
     }
 
     public List<Car> fetchCarListByCustomer(Customer customer) {
-        if (!isValidTicket(customer)) {
-            return null;
-        }
+        validateTicket(customer);
+
 
         List<Car> fetchedCarList = new ArrayList<>();
 
@@ -71,9 +70,7 @@ public class ParkingLot {
 
 
     public Car fetchCarByCustomer(Customer customer) {
-        if (!isValidTicket(customer)) {
-            return null;
-        }
+        validateTicket(customer);
 
         Car fetchedCar = null;
 
@@ -85,14 +82,13 @@ public class ParkingLot {
         return fetchedCar;
     }
 
-    private boolean isValidTicket(Customer customer) {
+    private void validateTicket(Customer customer) {
         if (customer.getTicketList() == null || customer.getTicketList().isEmpty()) {
-            return false;
+            throw new UnrecognizedTicketExpection();
         }
         if (customer.getTicketList().get(0).isFetched()) {
-            return false;
+            throw new UnrecognizedTicketExpection();
         }
-        return true;
     }
 
     private Car fetchCar(Ticket ticket) {
