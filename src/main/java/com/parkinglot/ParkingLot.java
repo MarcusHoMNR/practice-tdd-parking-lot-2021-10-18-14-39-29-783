@@ -73,9 +73,7 @@ public class ParkingLot {
     public List<Car> fetchCarListByCustomer(Customer customer) {
         validateTicket(customer);
 
-
         List<Car> fetchedCarList = new ArrayList<>();
-
 
         for (Ticket ticket : customer.getTicketList()) {
             fetchedCarList.add(fetchCar(ticket));
