@@ -1,5 +1,7 @@
 package com.parkinglot;
 
+import com.parkinglot.Exception.FullParkingLotException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class ParkingLot {
         if (capacity >= parkedCarList.size()) {
             return new Ticket(car.getCarId());
         }
-        return null;
+        throw new FullParkingLotException();
     }
 
     private void assignTicketToCustomer(Customer customer, Ticket ticket) {
@@ -47,7 +49,6 @@ public class ParkingLot {
             return;
         }
         customer.setTicketListBySingleTicket(ticket);
-        customer.getTicketList();
     }
 
     public List<Car> fetchCarListByCustomer(Customer customer) {
