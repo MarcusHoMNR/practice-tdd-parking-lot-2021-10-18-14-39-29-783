@@ -1,5 +1,6 @@
 package com.parkinglot;
 
+import com.parkinglot.Exception.FullParkingLotException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.parkinglot.Exception.ExceptionConstant.FULL_PARKING_LOT_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -36,10 +38,9 @@ public class ParkingLotTest {
         Customer customer = new Customer();
 
         //when
-        parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(car)));
-
         //then
-        assertTrue(customer.getTicketList().isEmpty());
+        FullParkingLotException exceptionMessage = assertThrows(FullParkingLotException.class, () -> parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(car))));
+        assertEquals(FULL_PARKING_LOT_EXCEPTION, exceptionMessage.getMessage());
     }
 
     @Test
