@@ -1,7 +1,4 @@
 package com.parkinglot;
-
-import java.nio.file.FileAlreadyExistsException;
-import java.util.Arrays;
 import java.util.List;
 
 public class ParkingBoy {
@@ -12,7 +9,7 @@ public class ParkingBoy {
 
     public void parkCars(Customer customer, List<Car> carList) {
         parkingLotList.stream()
-                .filter(parkingLot -> parkingLot.getCapacity() >= parkingLot.getParkedCarList().size())
+                .filter(parkingLot -> parkingLot.getCapacity() > parkingLot.getParkedCarList().size())
                 .findFirst().get()
                 .parkCars(customer, carList);
     }

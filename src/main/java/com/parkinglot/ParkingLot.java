@@ -48,7 +48,7 @@ public class ParkingLot {
 
 
     private Ticket issueTicket(Car car) {
-        if (capacity >= parkedCarList.size()) {
+        if (capacity > parkedCarList.size()) {
             return new Ticket(car.getCarId());
         }
         throw new FullParkingLotException();
