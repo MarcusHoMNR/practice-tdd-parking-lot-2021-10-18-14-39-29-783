@@ -134,4 +134,5 @@ public class ParkingLotTest {
                 () -> assertEquals(targetCarList.get(1).getCarId(), fetchedCarList.get(1).getCarId())
         );
     }
+
 }
