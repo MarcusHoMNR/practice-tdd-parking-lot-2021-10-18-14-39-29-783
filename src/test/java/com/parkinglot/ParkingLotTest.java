@@ -53,13 +53,14 @@ public class ParkingLotTest {
 
         //when
         parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));
-        ;
-        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
+
+        List<Car> fetchedCarList = parkingLot.fetchCarListByCustomer(customer);
 
         //then
         assertAll(
-                () -> assertNotNull(fetchedCar),
-                () -> assertEquals(targetCar.getCarId(), fetchedCar.getCarId())
+                () -> assertNotNull(fetchedCarList),
+                () -> assertEquals(1, fetchedCarList.size()),
+                () -> assertEquals(targetCar.getCarId(), fetchedCarList.get(0).getCarId())
         );
     }
 
@@ -71,7 +72,7 @@ public class ParkingLotTest {
 
         //when
         //then
-        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarListByCustomer(customer));
         assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
 
@@ -89,7 +90,7 @@ public class ParkingLotTest {
 
         //when
         //then
-        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarListByCustomer(customer));
         assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
 
@@ -102,12 +103,13 @@ public class ParkingLotTest {
 
         Customer customer = new Customer();
 
-        //when
-        parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));
-        parkingLot.fetchCarByCustomer(customer); // fetchedCarFirstTime
 
+        parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));
+        parkingLot.fetchCarListByCustomer(customer); // fetchedCarFirstTime
+
+        //when
         //then
-        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarListByCustomer(customer));
         assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
 

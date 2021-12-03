@@ -68,22 +68,8 @@ public class ParkingLot {
         return fetchedCarList;
     }
 
-
-    public Car fetchCarByCustomer(Customer customer) {
-        validateTicket(customer);
-
-        Car fetchedCar = null;
-
-
-        for (Ticket ticket : customer.getTicketList()) {
-            fetchedCar = fetchCar(ticket);
-        }
-
-        return fetchedCar;
-    }
-
     private void validateTicket(Customer customer) {
-        if (customer.getTicketList() == null || customer.getTicketList().isEmpty()) {
+        if (customer.getTicketList().isEmpty()) {
             throw new UnrecognizedTicketExpection();
         }
         if (customer.getTicketList().get(0).isFetched()) {
