@@ -4,13 +4,12 @@ import java.util.List;
 
 import static java.util.Comparator.comparingInt;
 
-public class SuperSmartParkingBoy {
-    final List<ParkingLot> parkingLotList;
+public class SuperSmartParkingBoy extends ParkingBoy{
 
     public SuperSmartParkingBoy(List<ParkingLot> parkingLotList) {
-        this.parkingLotList = parkingLotList;
+        super(parkingLotList);
     }
-
+    @Override
     public void parkCars(Customer customer, List<Car> carList) {
         parkingLotList.stream().max(comparingInt(ParkingLot::getRemainingEmptySpacesRate))
                 .get()

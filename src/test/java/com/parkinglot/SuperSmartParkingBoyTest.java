@@ -1,11 +1,16 @@
 package com.parkinglot;
 
+import com.parkinglot.Exception.FullParkingLotException;
+import com.parkinglot.Exception.UnrecognizedTicketExpection;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import static com.parkinglot.Exception.ExceptionConstant.FULL_PARKING_LOT_EXCEPTION;
+import static com.parkinglot.Exception.ExceptionConstant.UNRECOGNIZED_TICKET_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SuperSmartParkingBoyTest {
@@ -52,5 +57,79 @@ public class SuperSmartParkingBoyTest {
                 () -> assertEquals(1, parkingLot2.getParkedCarList().size()),
                 () -> assertEquals(targetCar, parkingLot2.getParkedCarList().get(0))
         );
+    }
+
+    @Test
+    void should_fetch_two_when_fetchCars_given_Super_Smart_parking_boy_manage_two_parking_lot_two_ticket_and_customer() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+        Car targetCar = new Car("car001");
+        Car targetCar2 = new Car("car002");
+        superSmartParkingBoy.parkCars(customer, new ArrayList<>(Arrays.asList(targetCar, targetCar2)));
+
+        //when
+        List<Car> fetchedCarList = superSmartParkingBoy.fetchCars(customer);
+
+        //then
+        assertAll(
+                () -> assertFalse(fetchedCarList.isEmpty()),
+                () -> assertEquals(2, fetchedCarList.size()),
+                () -> assertEquals(targetCar, fetchedCarList.get(0)),
+                () -> assertEquals(targetCar2, fetchedCarList.get(1))
+        );
+    }
+
+    @Test
+    void should_throw_when_fetchCars_given_Smart_parking_boy_manage_two_parking_unrecogniced_ticket_and_customer() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+
+        //when
+        //then
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> smartParkingBoy.fetchCars(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
+    }
+
+    @Test
+    void should_throw_when_fetchCars_given_smart_parking_boy_manage_two_parking_used_ticket_and_customer() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        SmartParkingBoy smartParkingBoyparkingBoy = new SmartParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+        Car targetCar = new Car("car001");
+        smartParkingBoyparkingBoy.parkCars(customer, new ArrayList<>(Arrays.asList(targetCar)));
+
+
+        smartParkingBoyparkingBoy.fetchCars(customer);
+        //when
+        //then
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> smartParkingBoyparkingBoy.fetchCars(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
+    }
+
+    @Test
+    void should_throw_when_parkCars_given_parking_boy_both_no_space_and_customer_and_car() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot(0);
+        ParkingLot parkingLot2 = new ParkingLot(0);
+
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+        Car targetCar = new Car("car001");
+
+        //when
+        //then
+        FullParkingLotException exceptionMessage = assertThrows(FullParkingLotException.class, () -> smartParkingBoy.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar))));
+        assertEquals(FULL_PARKING_LOT_EXCEPTION, exceptionMessage.getMessage());
     }
 }
