@@ -3,6 +3,7 @@ package com.parkinglot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ParkingLotTest {
     @Test
@@ -68,14 +69,36 @@ public class ParkingLotTest {
     @Test
     void should_return_null_when_fetchCar_given_customer_with_not_issued_ticket() {
         //given
-        Car anotherCar = new Car("car002");
+        Car anotherCar = new Car("car001");
+
         ParkingLot parkingLot = new ParkingLot();
+        ParkingLot anotherparkingLot = new ParkingLot();
 
         //when
-        Customer customer = parkingLot.parkCar(anotherCar);
+        Customer customer = anotherparkingLot.parkCar(anotherCar);
         Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
 
         //then
         assertNull(fetchedCar);
+    }
+
+    @Test
+    void should_return_null_when_fetchCar_given_customer_with_fetched_ticket() {
+        //given
+        Car targetCar = new Car("car001");
+
+        ParkingLot parkingLot = new ParkingLot();
+
+        //when
+        Customer customer = parkingLot.parkCar(targetCar);
+        Car fetchedCarFirstTime = parkingLot.fetchCarByCustomer(customer);
+        Car fetchedCarAgain = parkingLot.fetchCarByCustomer(customer);
+
+        //then
+        assertAll(
+                () -> assertNotNull(fetchedCarFirstTime),
+                () -> assertEquals(targetCar.getCarId(), fetchedCarFirstTime.getCarId()),
+                () -> assertNull(fetchedCarAgain)
+        );
     }
 }
