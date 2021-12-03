@@ -2,7 +2,6 @@ package com.parkinglot;
 
 import com.parkinglot.Exception.UnrecognizedTicketExpection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,14 @@ public class SmartParkingBoy {
     }
 
     public List<Car> fetchCars(Customer customer) {
-        return new ArrayList<>();
+        ParkingLot targetParkingLot = parkingLotList.stream()
+                .filter(
+                        parkingLot ->
+                                parkingLot.getParkedCarList().stream().map(Car::getCarId).collect(Collectors.toList()).contains(
+                                        customer.getTicketList().get(0).getLinkedCarId()
+                                )
+                ).findAny().get();
+        return targetParkingLot.fetchCarListByCustomer(customer);
     }
 
 }
