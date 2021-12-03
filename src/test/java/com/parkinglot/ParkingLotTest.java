@@ -85,15 +85,13 @@ public class ParkingLotTest {
         ParkingLot anotherparkingLot = new ParkingLot();
 
         Customer customer = new Customer();
-        
+
         anotherparkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(anotherCar)));
 
         //when
         //then
         UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
         assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
-
-
     }
 
     @Test

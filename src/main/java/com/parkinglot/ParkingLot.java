@@ -1,9 +1,12 @@
 package com.parkinglot;
 
 import com.parkinglot.Exception.FullParkingLotException;
+import com.parkinglot.Exception.UnrecognizedTicketExpection;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.parkinglot.Exception.ExceptionConstant.UNRECOGNIZED_TICKET_EXCEPTION;
 
 public class ParkingLot {
     private static final int DEFAULT_CAPACITY = 10;
@@ -93,8 +96,11 @@ public class ParkingLot {
     }
 
     private Car fetchCar(Ticket ticket) {
-        ticket.setFetched(true);
         Car fetchedCar = parkedCarList.stream().filter(car -> car.getCarId().equals(ticket.getLinkedCarId())).findFirst().orElse(null);
+        if (fetchedCar == null) {
+            throw new UnrecognizedTicketExpection();
+        }
+        ticket.setFetched(true);
         parkedCarList.remove(fetchedCar);
         return fetchedCar;
     }
