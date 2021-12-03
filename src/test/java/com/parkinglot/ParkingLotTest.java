@@ -39,12 +39,10 @@ public class ParkingLotTest {
         //given
 
         Car targetCar = new Car("car001");
-        Ticket ticket = new Ticket(targetCar.getCarId());
-        Customer customer = new Customer(ticket);
         ParkingLot parkingLot = new ParkingLot();
 
         //when
-        Customer parkedCustomer = parkingLot.parkCar(targetCar);
+        Customer customer = parkingLot.parkCar(targetCar);
         Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
 
         //then
@@ -65,6 +63,19 @@ public class ParkingLotTest {
 
         //then
         assertNull(fetchedCar);
+    }
 
+    @Test
+    void should_return_null_when_fetchCar_given_customer_with_not_issued_ticket() {
+        //given
+        Car anotherCar = new Car("car002");
+        ParkingLot parkingLot = new ParkingLot();
+
+        //when
+        Customer customer = parkingLot.parkCar(anotherCar);
+        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
+
+        //then
+        assertNull(fetchedCar);
     }
 }
