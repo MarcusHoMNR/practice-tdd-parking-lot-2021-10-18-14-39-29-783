@@ -51,7 +51,7 @@ public class ParkingLot {
     }
 
     public int getRemainingEmptySpacesRate() {
-        return parkedCarList.size() / capacity;
+        return getRemainingEmptySpacesNumber() / capacity;
     }
 
 
