@@ -50,6 +50,11 @@ public class ParkingLot {
         return capacity - parkedCarList.size();
     }
 
+    public int getRemainingEmptySpacesRate() {
+        return parkedCarList.size() / capacity;
+    }
+
+
 
     private Ticket issueTicket(Car car) {
         if (capacity > parkedCarList.size()) {

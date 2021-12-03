@@ -12,5 +12,8 @@ public class SuperSmartParkingBoy {
     }
 
     public void parkCars(Customer customer, List<Car> carList) {
+        parkingLotList.stream().max(comparingInt(ParkingLot::getRemainingEmptySpacesRate))
+                .get()
+                .parkCars(customer, carList);
     }
 }
