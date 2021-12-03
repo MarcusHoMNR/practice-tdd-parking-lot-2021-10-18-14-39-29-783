@@ -15,7 +15,15 @@ public class ParkingBoy {
                 .parkCars(customer, carList);
     }
 
-    public List<Car> fetchCars(Customer customer) {;
+    public List<Car> fetchCars(Customer customer) {
+        if (customer.getTicketList().isEmpty()) {
+            return parkingLotList.get(0).fetchCarListByCustomer(customer);
+        }
+        for (Ticket ticket: customer.getTicketList()) {
+            if (ticket.isFetched()) {
+                return parkingLotList.get(0).fetchCarListByCustomer(customer);
+            }
+        }
         ParkingLot targetParkingLot = parkingLotList.stream()
                 .filter(
                         parkingLot ->

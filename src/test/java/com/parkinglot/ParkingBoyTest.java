@@ -107,8 +107,26 @@ public class ParkingBoyTest {
 
         ParkingBoy parkingBoy = new ParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
         Customer customer = new Customer();
-        Car targetCar = new Car("car001");
 
+        //when
+        //then
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingBoy.fetchCars(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
+    }
+
+    @Test
+    void should_throw_when_fetchCars_given_parking_boy_manage_two_parking_used_ticket_and_customer() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        ParkingBoy parkingBoy = new ParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+        Car targetCar = new Car("car001");
+        parkingBoy.parkCars(customer, new ArrayList<>(Arrays.asList(targetCar)));
+
+
+        parkingBoy.fetchCars(customer);
         //when
         //then
         UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingBoy.fetchCars(customer));
