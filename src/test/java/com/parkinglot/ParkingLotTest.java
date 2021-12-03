@@ -1,6 +1,7 @@
 package com.parkinglot;
 
 import com.parkinglot.Exception.FullParkingLotException;
+import com.parkinglot.Exception.UnrecognizedTicketExpection;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.parkinglot.Exception.ExceptionConstant.FULL_PARKING_LOT_EXCEPTION;
+import static com.parkinglot.Exception.ExceptionConstant.UNRECOGNIZED_TICKET_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ParkingLotTest {
     @Test
@@ -51,7 +52,8 @@ public class ParkingLotTest {
         Customer customer = new Customer();
 
         //when
-        parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));;
+        parkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar)));
+        ;
         Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
 
         //then
@@ -83,13 +85,15 @@ public class ParkingLotTest {
         ParkingLot anotherparkingLot = new ParkingLot();
 
         Customer customer = new Customer();
+        
+        anotherparkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(anotherCar)));
 
         //when
-        anotherparkingLot.parkCars(customer, new ArrayList<>(Collections.singletonList(anotherCar)));
-        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
-
         //then
-        assertNull(fetchedCar);
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
+
+
     }
 
     @Test
