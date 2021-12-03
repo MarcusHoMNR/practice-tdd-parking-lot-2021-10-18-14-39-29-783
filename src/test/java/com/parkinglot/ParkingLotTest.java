@@ -39,7 +39,7 @@ public class ParkingLotTest {
         //given
 
         Car targetCar = new Car("car001");
-        Ticket ticket = new Ticket(car.getCarId());
+        Ticket ticket = new Ticket(targetCar.getCarId());
         Customer customer = new Customer(ticket);
         ParkingLot parkingLot = new ParkingLot();
 
@@ -47,6 +47,6 @@ public class ParkingLotTest {
         Car fetchedCar = parkingLot.fetchCar(targetCar);
 
         //then
-        assertEquals(targetCar, fetchedCar);
+        assertEquals(targetCar.getCarId(), fetchedCar.getCarId());
     }
 }
