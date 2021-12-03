@@ -2,7 +2,6 @@ package com.parkinglot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ParkingLot {
     private static final int DEFAULT_CAPACITY = 10;
@@ -47,7 +46,9 @@ public class ParkingLot {
 
 
     public Car fetchCarByCustomer(Customer customer) {
-        validateTicket(customer);
+        if (!isValidTicket(customer)) {
+            return null;
+        }
 
         Car fetchedCar = null;
 
@@ -59,8 +60,11 @@ public class ParkingLot {
         return fetchedCar;
     }
 
-    private void validateTicket(Customer customer) {
-
+    private boolean isValidTicket(Customer customer) {
+        if (customer.getTicketList() == null || customer.getTicketList().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     private Car fetchCar(Ticket ticket) {
