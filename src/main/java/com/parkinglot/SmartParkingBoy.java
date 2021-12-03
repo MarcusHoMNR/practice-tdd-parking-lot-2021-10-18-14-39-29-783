@@ -21,6 +21,9 @@ public class SmartParkingBoy {
     }
 
     public List<Car> fetchCars(Customer customer) {
+        if (customer.getTicketList().isEmpty()) {
+            throw new UnrecognizedTicketExpection();
+        }
         ParkingLot targetParkingLot = parkingLotList.stream()
                 .filter(
                         parkingLot ->
