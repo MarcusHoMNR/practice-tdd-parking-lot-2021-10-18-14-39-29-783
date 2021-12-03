@@ -9,6 +9,11 @@ import java.util.List;
 public class ParkingLot {
     private static final int DEFAULT_CAPACITY = 10;
     private final int capacity;
+
+    public List<Car> getParkedCarList() {
+        return parkedCarList;
+    }
+
     private final List<Car> parkedCarList;
 
     public ParkingLot(int capacity) {
@@ -19,6 +24,10 @@ public class ParkingLot {
     public ParkingLot() {
         this.capacity = DEFAULT_CAPACITY;
         this.parkedCarList = new ArrayList<>();
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public void parkCars(Customer customer, List<Car> carList) {

@@ -1,14 +1,16 @@
 package com.parkinglot;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.util.Arrays;
 import java.util.List;
 
 public class ParkingBoy {
-    final ParkingLot parkingLot;
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    final List<ParkingLot> parkingLotList;
+    public ParkingBoy(List<ParkingLot> parkingLotList) {
+        this.parkingLotList = parkingLotList;
     }
 
     public void parkCars(Customer customer, List<Car> carList) {
-        parkingLot.parkCars(customer, carList);
+        
     }
 }
