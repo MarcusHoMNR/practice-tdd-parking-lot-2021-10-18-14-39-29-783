@@ -53,4 +53,18 @@ public class ParkingLotTest {
                 () -> assertEquals(targetCar.getCarId(), fetchedCar.getCarId())
         );
     }
+
+    @Test
+    void should_return_null_when_fetchCar_given_customer_with_no_ticket() {
+        //given
+        Customer customer = new Customer();
+        ParkingLot parkingLot = new ParkingLot();
+
+        //when
+        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
+
+        //then
+        assertNull(fetchedCar);
+
+    }
 }
