@@ -18,11 +18,16 @@ public class ParkingLot {
         this.parkedCarList = new ArrayList<>();
     }
 
-    public Customer parkCar(Car car) {
+    public void parkCars(Customer customer, List<Car> carList) {
+        for (Car car : carList) {
+            parkCar(customer, car);
+        }
+    }
+
+    private void parkCar(Customer customer, Car car) {
         assignParkingLot(car);
         Ticket ticket = issueTicket(car);
-
-        return assignTicketToCustomer(ticket);
+        assignTicketToCustomer(customer, ticket);
     }
 
     private void assignParkingLot(Car car) {
@@ -37,11 +42,27 @@ public class ParkingLot {
         return null;
     }
 
-    private Customer assignTicketToCustomer(Ticket ticket) {
+    private void assignTicketToCustomer(Customer customer, Ticket ticket) {
         if (ticket == null) {
-            return new Customer();
+            return;
         }
-        return new Customer(ticket);
+        customer.setTicketListBySingleTicket(ticket);
+        customer.getTicketList();
+    }
+
+    public List<Car> fetchCarListByCustomer(Customer customer) {
+        if (!isValidTicket(customer)) {
+            return null;
+        }
+
+        List<Car> fetchedCarList = new ArrayList<>();
+
+
+        for (Ticket ticket : customer.getTicketList()) {
+            fetchedCarList.add(fetchCar(ticket));
+        }
+
+        return fetchedCarList;
     }
 
 
@@ -63,7 +84,8 @@ public class ParkingLot {
     private boolean isValidTicket(Customer customer) {
         if (customer.getTicketList() == null || customer.getTicketList().isEmpty()) {
             return false;
-        } if (customer.getTicketList().get(0).isFetched()) {
+        }
+        if (customer.getTicketList().get(0).isFetched()) {
             return false;
         }
         return true;
@@ -71,6 +93,8 @@ public class ParkingLot {
 
     private Car fetchCar(Ticket ticket) {
         ticket.setFetched(true);
-        return parkedCarList.stream().filter(car -> car.getCarId().equals(ticket.getLinkedCarId())).findFirst().orElse(null);
+        Car fetchedCar = parkedCarList.stream().filter(car -> car.getCarId().equals(ticket.getLinkedCarId())).findFirst().orElse(null);
+        parkedCarList.remove(fetchedCar);
+        return fetchedCar;
     }
 }

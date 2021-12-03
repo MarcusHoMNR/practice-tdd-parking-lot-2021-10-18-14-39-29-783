@@ -12,7 +12,7 @@ public class Customer {
     }
 
     public Customer() {
-        this.ticketList = null;
+        this.ticketList = new ArrayList<>();
     }
 
     public List<Ticket> getTicketList() {
