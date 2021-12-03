@@ -47,6 +47,6 @@ public class ParkingLotTest {
         Car targetCar = parkingLot.fetchCar(car);
 
         //then
-        assertEquals(0, customer.getTicketList().size());
+        assertNotNull(targetCar);
     }
 }
