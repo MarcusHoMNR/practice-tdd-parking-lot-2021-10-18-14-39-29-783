@@ -32,7 +32,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_parkCar_given_parking_lot_full_And_Car() {
+    void should_throw_when_parkCar_given_parking_lot_full_And_Car() {
         //given
         ParkingLot parkingLot = new ParkingLot(0);
         Car car = new Car("car001");
@@ -64,7 +64,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_fetchCar_given_customer_with_no_ticket() {
+    void should_throw_when_fetchCar_given_customer_with_no_ticket() {
         //given
         Customer customer = new Customer();
         ParkingLot parkingLot = new ParkingLot();
@@ -76,7 +76,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_fetchCar_given_customer_with_not_issued_ticket() {
+    void should_throw_when_fetchCar_given_customer_with_not_issued_ticket() {
         //given
         Car anotherCar = new Car("car001");
 
@@ -94,7 +94,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_fetchCar_given_customer_with_fetched_ticket() {
+    void should_throw_when_fetchCar_given_customer_with_fetched_ticket() {
         //given
         Car targetCar = new Car("car001");
 
