@@ -50,7 +50,7 @@ public class ParkingLot {
     }
 
 
-//    public Car fetchCar(Car car) {
-//        return null;
-//    }
+    public Car fetchCar(Car car) {
+        return null;
+    }
 }
