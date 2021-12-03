@@ -2,7 +2,7 @@ package com.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotTest {
     @Test
@@ -15,7 +15,10 @@ public class ParkingLotTest {
         Customer customer = parkingLot.parkCar(car);
 
         //then
-        assertNotNull(customer.getTicketList());
+        assertAll(
+                () -> assertEquals(1, customer.getTicketList().size()),
+                () -> assertNotNull(customer.getTicketList().get(0))
+        );
     }
 
     @Test
@@ -28,6 +31,6 @@ public class ParkingLotTest {
         Customer customer = parkingLot.parkCar(car);
 
         //then
-        assertNotNull(customer.getTicketList());
+        assertEquals(0, customer.getTicketList().size());
     }
 }
