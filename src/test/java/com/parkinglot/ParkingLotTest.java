@@ -31,6 +31,22 @@ public class ParkingLotTest {
         Customer customer = parkingLot.parkCar(car);
 
         //then
-        assertEquals(0, customer.getTicketList().size());
+        assertNull(customer.getTicketList());
     }
+//
+//    @Test
+//    void should_return_target_car_when_fetchCar_given_customer_with_one_valid_ticket() {
+//        //given
+//
+//        Car car = new Car("car001");
+//        Ticket ticket = new Ticket(car.getCarId());
+//        Customer customer = new Customer(ticket);
+//        ParkingLot parkingLot = new ParkingLot();
+//
+//        //when
+//        Car targetCar = parkingLot.fetchCar(car);
+//
+//        //then
+//        assertEquals(0, customer.getTicketList().size());
+//    }
 }

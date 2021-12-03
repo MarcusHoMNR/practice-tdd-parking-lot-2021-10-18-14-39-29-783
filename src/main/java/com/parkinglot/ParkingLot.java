@@ -36,12 +36,21 @@ public class ParkingLot {
 
 
     private Ticket issueTicket(Car car) {
-        return new Ticket(car.getCarId());
+        if (capacity >= parkedCarList.size()) {
+            return new Ticket(car.getCarId());
+        }
+        return null;
     }
 
     private Customer assignTicketToCustomer(Ticket ticket) {
+        if (ticket == null) {
+            return new Customer();
+        }
         return new Customer(ticket);
     }
 
 
+//    public Car fetchCar(Car car) {
+//        return null;
+//    }
 }

@@ -12,6 +12,9 @@ public class Customer {
         this.ticketList = new ArrayList<>(Collections.singletonList(ticket));
     }
 
+    public Customer() {
+        this.ticketList = null;
+    }
 
     public List<Ticket> getTicketList() {
         return ticketList;
