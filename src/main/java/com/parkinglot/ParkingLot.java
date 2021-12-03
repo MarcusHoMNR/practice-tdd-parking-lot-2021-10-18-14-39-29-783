@@ -2,6 +2,7 @@ package com.parkinglot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ParkingLot {
     private static final int DEFAULT_CAPACITY = 10;
@@ -19,19 +20,14 @@ public class ParkingLot {
     }
 
     public Customer parkCar(Car car) {
-        boolean isAssignLocationSuccess = assignLocation(car);
-        Ticket ticket = null;
-        if (isAssignLocationSuccess) {
-            ticket = issueTicket(car);
-        }
+        assignParkingLot(car);
+        Ticket ticket = issueTicket(car);
 
-        Customer customerWithParkedTicket = assignTicketToCustomer(ticket);
-
-        return customerWithParkedTicket;
+        return assignTicketToCustomer(ticket);
     }
 
-    private boolean assignLocation(Car car) {
-        return parkedCarList.add(car);
+    private void assignParkingLot(Car car) {
+        parkedCarList.add(car);
     }
 
 
@@ -50,7 +46,24 @@ public class ParkingLot {
     }
 
 
-    public Car fetchCar(Car car) {
-        return null;
+    public Car fetchCarByCustomer(Customer customer) {
+        validateTicket(customer);
+
+        Car fetchedCar = null;
+
+
+        for (Ticket ticket : customer.getTicketList()) {
+            fetchedCar = fetchCar(ticket);
+        }
+
+        return fetchedCar;
+    }
+
+    private void validateTicket(Customer customer) {
+
+    }
+
+    private Car fetchCar(Ticket ticket) {
+        return parkedCarList.stream().filter(car -> car.getCarId().equals(ticket.getLinkedCarId())).findFirst().orElse(null);
     }
 }

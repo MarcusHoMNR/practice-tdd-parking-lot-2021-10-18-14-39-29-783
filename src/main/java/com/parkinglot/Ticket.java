@@ -8,4 +8,8 @@ public class Ticket {
         this.isFetched = false;
         this.linkedCarId = linkedCarId;
     }
+
+    public String getLinkedCarId() {
+        return linkedCarId;
+    }
 }

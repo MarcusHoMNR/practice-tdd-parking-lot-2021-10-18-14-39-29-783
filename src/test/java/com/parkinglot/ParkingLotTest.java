@@ -44,12 +44,13 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
 
         //when
-        Car fetchedCar = parkingLot.fetchCar(targetCar);
+        Customer parkedCustomer = parkingLot.parkCar(targetCar);
+        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
 
         //then
         assertAll(
                 () -> assertNotNull(fetchedCar),
-                () ->  assertEquals(targetCar.getCarId(), fetchedCar.getCarId())
+                () -> assertEquals(targetCar.getCarId(), fetchedCar.getCarId())
         );
     }
 }
