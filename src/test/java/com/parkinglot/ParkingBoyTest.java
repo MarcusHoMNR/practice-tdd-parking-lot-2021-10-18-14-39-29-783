@@ -1,5 +1,6 @@
 package com.parkinglot;
 
+import com.parkinglot.Exception.FullParkingLotException;
 import com.parkinglot.Exception.UnrecognizedTicketExpection;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.parkinglot.Exception.ExceptionConstant.FULL_PARKING_LOT_EXCEPTION;
 import static com.parkinglot.Exception.ExceptionConstant.UNRECOGNIZED_TICKET_EXCEPTION;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -132,4 +134,21 @@ public class ParkingBoyTest {
         UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingBoy.fetchCars(customer));
         assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
+
+    @Test
+    void should_throw_when_parkCars_given_parking_boy_both_no_space_and_customer_and_car() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot(0);
+        ParkingLot parkingLot2 = new ParkingLot(0);
+
+        ParkingBoy parkingBoy = new ParkingBoy(new ArrayList<>(Arrays.asList(parkingLot1, parkingLot2)));
+        Customer customer = new Customer();
+        Car targetCar = new Car("car001");
+
+        //when
+        //then
+        FullParkingLotException exceptionMessage = assertThrows(FullParkingLotException.class, () -> parkingBoy.parkCars(customer, new ArrayList<>(Collections.singletonList(targetCar))));
+        assertEquals(FULL_PARKING_LOT_EXCEPTION, exceptionMessage.getMessage());
+    }
+
 }
