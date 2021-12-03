@@ -19,7 +19,29 @@ public class ParkingLot {
     }
 
     public Customer parkCar(Car car) {
-        return new Customer(null);
+        boolean isAssignLocationSuccess = assignLocation(car);
+        Ticket ticket = null;
+        if (isAssignLocationSuccess) {
+            ticket = issueTicket(car);
+        }
+
+        Customer customerWithParkedTicket = assignTicketToCustomer(ticket);
+
+        return customerWithParkedTicket;
     }
+
+    private boolean assignLocation(Car car) {
+        return parkedCarList.add(car);
+    }
+
+
+    private Ticket issueTicket(Car car) {
+        return new Ticket(car.getCarId());
+    }
+
+    private Customer assignTicketToCustomer(Ticket ticket) {
+        return new Customer(ticket);
+    }
+
 
 }
