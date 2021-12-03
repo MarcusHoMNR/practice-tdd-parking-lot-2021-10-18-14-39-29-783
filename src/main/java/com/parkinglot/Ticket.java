@@ -12,4 +12,12 @@ public class Ticket {
     public String getLinkedCarId() {
         return linkedCarId;
     }
+
+    public boolean isFetched() {
+        return isFetched;
+    }
+
+    public void setFetched(boolean fetched) {
+        isFetched = fetched;
+    }
 }

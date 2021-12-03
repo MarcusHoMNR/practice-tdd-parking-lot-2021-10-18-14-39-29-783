@@ -63,11 +63,14 @@ public class ParkingLot {
     private boolean isValidTicket(Customer customer) {
         if (customer.getTicketList() == null || customer.getTicketList().isEmpty()) {
             return false;
+        } if (customer.getTicketList().get(0).isFetched()) {
+            return false;
         }
         return true;
     }
 
     private Car fetchCar(Ticket ticket) {
+        ticket.setFetched(true);
         return parkedCarList.stream().filter(car -> car.getCarId().equals(ticket.getLinkedCarId())).findFirst().orElse(null);
     }
 }
