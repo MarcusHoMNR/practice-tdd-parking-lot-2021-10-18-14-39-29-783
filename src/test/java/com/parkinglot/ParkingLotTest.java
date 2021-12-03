@@ -70,10 +70,9 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
 
         //when
-        Car fetchedCar = parkingLot.fetchCarByCustomer(customer);
-
         //then
-        assertNull(fetchedCar);
+        UnrecognizedTicketExpection exceptionMessage = assertThrows(UnrecognizedTicketExpection.class, () -> parkingLot.fetchCarByCustomer(customer));
+        assertEquals(UNRECOGNIZED_TICKET_EXCEPTION, exceptionMessage.getMessage());
     }
 
     @Test
@@ -135,31 +134,6 @@ public class ParkingLotTest {
                 () -> assertEquals(2, fetchedCarList.size()),
                 () -> assertEquals(targetCarList.get(0).getCarId(), fetchedCarList.get(0).getCarId()),
                 () -> assertEquals(targetCarList.get(1).getCarId(), fetchedCarList.get(1).getCarId())
-        );
-    }
-
-    @Test
-    void should_return_multiple_with_one_null_when_fetchCar_given_customer_with_ticketList() {
-        //given
-        Car targetCar1 = new Car("car001");
-        Car targetCar2 = new Car("car002");
-        List<Car> targetCarList = new ArrayList<>(Collections.singletonList(targetCar1));
-        List<Car> anotherCarList = new ArrayList<>(Collections.singletonList(targetCar2));
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingLot anotherParkingLot = new ParkingLot();
-        Customer customer = new Customer();
-
-        //when
-        parkingLot.parkCars(customer, targetCarList);
-        anotherParkingLot.parkCars(customer, anotherCarList);
-        List<Car> fetchedCarList = parkingLot.fetchCarListByCustomer(customer);
-
-        //then
-        assertAll(
-                () -> assertNotNull(fetchedCarList),
-                () -> assertEquals(2, fetchedCarList.size()),
-                () -> assertEquals(targetCarList.get(0).getCarId(), fetchedCarList.get(0).getCarId()),
-                () -> assertNull(fetchedCarList.get(1))
         );
     }
 }
