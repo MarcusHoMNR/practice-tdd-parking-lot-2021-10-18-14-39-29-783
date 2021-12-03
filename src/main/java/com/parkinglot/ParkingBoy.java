@@ -11,6 +11,9 @@ public class ParkingBoy {
     }
 
     public void parkCars(Customer customer, List<Car> carList) {
-        
+        parkingLotList.stream()
+                .filter(parkingLot -> parkingLot.getCapacity() >= parkingLot.getParkedCarList().size())
+                .findFirst().get()
+                .parkCars(customer, carList);
     }
 }
