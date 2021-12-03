@@ -9,6 +9,6 @@ public class ParkingBoy {
     }
 
     public void parkCars(Customer customer, List<Car> carList) {
-
+        parkingLot.parkCars(customer, carList);
     }
 }
