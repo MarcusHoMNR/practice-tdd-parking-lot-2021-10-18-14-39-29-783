@@ -1,27 +1,36 @@
 package com.parkinglot;
+
+import com.parkinglot.Exception.FullParkingLotException;
+import com.parkinglot.Exception.UnrecognizedTicketExpection;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParkingBoy {
     final List<ParkingLot> parkingLotList;
+
     public ParkingBoy(List<ParkingLot> parkingLotList) {
         this.parkingLotList = parkingLotList;
     }
 
     public void parkCars(Customer customer, List<Car> carList) {
-        parkingLotList.stream()
+        ParkingLot targetLot = parkingLotList.stream()
                 .filter(parkingLot -> parkingLot.getCapacity() > parkingLot.getParkedCarList().size())
-                .findFirst().get()
-                .parkCars(customer, carList);
+                .findFirst().orElse(null);
+        if (targetLot != null) {
+            targetLot.parkCars(customer, carList);
+        } else {
+            throw new FullParkingLotException();
+        }
     }
 
     public List<Car> fetchCars(Customer customer) {
         if (customer.getTicketList().isEmpty()) {
-            return parkingLotList.get(0).fetchCarListByCustomer(customer);
+            throw new UnrecognizedTicketExpection();
         }
-        for (Ticket ticket: customer.getTicketList()) {
+        for (Ticket ticket : customer.getTicketList()) {
             if (ticket.isFetched()) {
-                return parkingLotList.get(0).fetchCarListByCustomer(customer);
+                throw new UnrecognizedTicketExpection();
             }
         }
         ParkingLot targetParkingLot = parkingLotList.stream()
@@ -31,6 +40,6 @@ public class ParkingBoy {
                                         customer.getTicketList().get(0).getLinkedCarId()
                                 )
                 ).findAny().get();
-            return targetParkingLot.fetchCarListByCustomer(customer);
+        return targetParkingLot.fetchCarListByCustomer(customer);
     }
 }
