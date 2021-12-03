@@ -38,15 +38,15 @@ public class ParkingLotTest {
     void should_return_target_car_when_fetchCar_given_customer_with_one_valid_ticket() {
         //given
 
-        Car car = new Car("car001");
+        Car targetCar = new Car("car001");
         Ticket ticket = new Ticket(car.getCarId());
         Customer customer = new Customer(ticket);
         ParkingLot parkingLot = new ParkingLot();
 
         //when
-        Car targetCar = parkingLot.fetchCar(car);
+        Car fetchedCar = parkingLot.fetchCar(targetCar);
 
         //then
-        assertNotNull(targetCar);
+        assertEquals(targetCar, fetchedCar);
     }
 }
